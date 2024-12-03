@@ -1,0 +1,13 @@
+Estadísticas generales de las respuestas:
+max_palabras: 752
+min_palabras: 1
+media_palabras: 52.473941134242644
+std_palabras: 73.80810585950601
+
+Estadísticas de número de palabras por tipo de respuesta:
+                 count       mean        std  min   25%   50%   75%    max
+respuesta_tipo                                                            
+CAUSE            252.0  48.583333  66.628699  1.0   9.0  24.0  56.0  461.0
+INFORMATION     2009.0  50.390742  75.909309  1.0  12.0  27.0  57.0  706.0
+OTHER             67.0  40.925373  40.612102  1.0   9.5  31.0  54.0  196.0
+SUGGESTION      4637.0  53.754798  73.602274  1.0  15.0  33.0  64.0  752.0
