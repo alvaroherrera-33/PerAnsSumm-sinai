@@ -56,38 +56,34 @@ def encode_tags(batch):
     }
 
 # Tokenización y alineación de etiquetas
-label_to_id = {'CAUSE': 1, 'INFORMATION': 2, 'SUGGESTION': 3, 'EXPERIENCE': 4, 'QUESTION': 5}
-
-# Función para tokenizar y alinear las etiquetas
 def tokenize_and_align_labels(examples):
-    tokenized_inputs = tokenizer(examples['raw_text'], padding="max_length", truncation=True, max_length=128,  return_offsets_mapping=True)
-    labels = [0] * len(tokenized_inputs['input_ids'])  # Inicia todas las etiquetas como 0 (ninguna perspectiva)
-
-    for span in examples['labelled_answer_spans']:
-        # Filtrar claves con contenido y extraer los "label_spans"
-        filtered_label_spans = {
-            key: [item['label_spans'] for item in value if 'label_spans' in item]  # Extraer solo los label_spans
-            for key, value in span.items()
-            if value is not None  # Solo claves con listas no vacías
-        }
-
-        # Etiqueta los tokens dentro del rango del span
-        for label, spans in filtered_label_spans.items():
-            label_id = label_to_id[label]  # Obtén el índice asociado a la etiqueta
-            for start, end in spans:  # Desempaqueta las posiciones del span
-                 for idx, offsets in enumerate(tokenized_inputs['offset_mapping']):
-                    # Asegúrate de que offsets es una tupla o lista de longitud 2
-                    if len(offsets) == 2:
-                        token_start, token_end = offsets
-                        if token_start is not None and token_end is not None:  # Ignorar valores especiales
-                            if token_start >= start and token_end <= end:
-                                labels[idx] = label_id  # Asigna la etiqueta correspondiente
-    labels = labels[: len(tokenized_inputs['input_ids'])] 
-    tokenized_inputs.pop('offset_mapping', None)
-
-    tokenized_inputs['labels'] = labels
-    return tokenized_inputs
+    tokenized_inputs = tokenizer(
+        examples['answers'],
+        truncation=True,
+        padding=True, max_length=512,
+        #padding='max_length',
+        is_split_into_words=True
+    )
     
+    all_labels = examples['labels']
+    new_labels = []
+    
+    for i, labels in enumerate(all_labels):
+        word_ids = tokenized_inputs.word_ids(batch_index=i)  # Mapea tokens a palabras originales
+        previous_word_idx = None
+        label_ids = []
+        for word_idx in word_ids:
+            if word_idx is None:
+                label_ids.append(-100)  # Ignorar tokens de padding
+            elif word_idx != previous_word_idx:
+                label_ids.append(labels[word_idx])  # Etiqueta del primer token
+            else:
+                label_ids.append(labels[previous_word_idx])  # Etiquetas para subtokens
+            previous_word_idx = word_idx
+        new_labels.append(label_ids)
+    
+    tokenized_inputs["labels"] = new_labels
+    return tokenized_inputs
 
 # Mapear etiquetas a índices
 train_dataset = train_dataset.map(encode_tags, batched=True)

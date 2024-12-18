@@ -5,14 +5,14 @@
 #SBATCH --output=/mnt/beegfs/aarjonil/peranssumm/PerAnsSumm-sinai/slurm/%A.out
 #SBATCH --ntasks=1
 #SBATCH --mem=32G
-#SBATCH --gres=gpu:tesla:1
+##SBATCH --gres=gpu:tesla:1
 ##SBATCH --nodelist=nodo02
 ##SBATCH --gres=gpu:rtx:1
 ##SBATCH --gres=gpu:tesla:1
 ##SBATCH --gres=gpu:tesla:1
 ##SBATCH --gres=gpu:1
 ##SBATCH --gres=gpu:1
-##SBATCH --gres=gpu:ampere:1
+#SBATCH --gres=gpu:ampere:1
 
 # (Opcional) Limpieza de módulos cargados previamente
 module purge
@@ -27,7 +27,7 @@ source activate forito
 # Ejecución del primer paso
 # echo python /mnt/beegfs/lmolino/PycharmProjects/${1}/run.py
 # srun python /mnt/beegfs/lmolino/PycharmProjects/RADNLP/inference.py
-srun python /mnt/beegfs/aarjonil/peranssumm/PerAnsSumm-sinai/task_a/trainBERT.py
+srun python /mnt/beegfs/aarjonil/peranssumm/PerAnsSumm-sinai/task_a/trainLLM.py
 #srun python /mnt/beegfs/aarjonil/peranssumm/PerAnsSumm-sinai/task_a/inference.py
 # srun torchrun --nproc_per_node=4 /mnt/beegfs/lmolino/PycharmProjects/${1}/run.py
 # srun python -m --num_processes=4 /mnt/beegfs/lmolino/PycharmProjects/${1}/run.py
