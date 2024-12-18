@@ -1,0 +1,34 @@
+Task Description  
+You are given a question ( Q ), a set of user answers ( A ), and a set of perspective categories:  
+- Information: Objective facts or explanations about the condition or procedure.  
+- Cause: Insights into what causes or could worsen the issue.  
+- Suggestion: Advice or recommendations to address the problem.  
+- Experience: Personal stories or shared experiences related to the problem.  
+- Question: Queries that seek additional clarification or recommendations.  
+
+Your task is:  
+1. Span Identification: Locate specific spans within the answers ( A ) that correspond to one of these perspectives.  
+2. Classification: Assign the identified span to the correct perspective category.  
+
+Input Example
+- Question (Q): "I was just diagnosed with gallstones in my gall bladder. I really don’t want to have surgery and have been told that there are other ways to get rid of the stones. Suggestions?"
+- Answers (A):  
+  1. "Most gallstones are made of pure cholesterol. You might try a diet with low fat and very low saturated fats. I've had the surgery, and it really isn't a big deal. If you leave the gallstones there, they can get large enough to damage."  
+  2. "Have you seen a gastroenterologist? They can do a minimally invasive procedure called an ERCP. I had the surgery myself about 10 years ago, and it really helped." 
+  3. "The best remedy is surgery. I had surgery to have kidney stones removed. The surgery isn’t as bad as you think it may be."  
+
+Output Example
+- Information: "Most gallstones are made of pure cholesterol."
+- Cause: "If you leave the gallstones there, they can get large enough to damage." 
+- Suggestion: "You might try a diet with low fat and very low saturated fats." 
+- Experience: "I had the surgery myself about 10 years ago, and it really helped." 
+- Question: "Have you seen a gastroenterologist?"
+
+Key Considerations
+- Contextual understanding is crucial: Ensure that spans are precise and directly tied to the category.  
+- Medical knowledge will often be necessary to interpret and classify perspectives accurately.  
+
+Output Format 
+For each span, return:  
+1. The text span.  
+2. The assigned perspective category.

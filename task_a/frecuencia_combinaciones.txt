@@ -1,0 +1,3 @@
+Frecuencia de combinaciones de categorías:
+
+Combinación: , Frecuencia: 2236

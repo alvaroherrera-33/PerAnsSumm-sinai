@@ -5,7 +5,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # 1. Cargar datos del dataset
-ruta_dataset = '/mnt/beegfs/aarjonil/peranssumm/PerAnsSumm-sinai/dataset/valid.json'  # Asegúrate de colocar la ruta correcta
+ruta_dataset = '/mnt/beegfs/aarjonil/peranssumm/PerAnsSumm-sinai/dataset/train.json'  # Asegúrate de colocar la ruta correcta
 df = pd.read_json(ruta_dataset)
 
 # 2. Crear carpeta de salida
@@ -35,9 +35,10 @@ for index, row in df.iterrows():
             respuesta_tipo = "CAUSE"
         elif "INFORMATION" in row['labelled_answer_spans']:
             respuesta_tipo = "INFORMATION"
-        else:
-            respuesta_tipo = "OTHER"
-        
+        elif "QUESTION" in row['labelled_answer_spans']:
+            respuesta_tipo = "QUESTION"
+        elif "EXPERIENCE" in row['labelled_answer_spans']:
+            respuesta_tipo = "EXPERIENCE"
         num_palabras = contar_palabras(answer)
         
         # Guardar estadísticas por cada respuesta

@@ -1,11 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=RADNLP
+#SBATCH --job-name=PASUMM
 #SBATCH --partition=normal
 #SBATCH --nodes=1
-#SBATCH --output=/mnt/beegfs/lmolino/PycharmProjects/RADNLP/slurm/%A.out
+#SBATCH --output=/mnt/beegfs/aarjonil/peranssumm/PerAnsSumm-sinai/slurm/%A.out
 #SBATCH --ntasks=1
 #SBATCH --mem=32G
 #SBATCH --gres=gpu:tesla:1
+##SBATCH --nodelist=nodo02
 ##SBATCH --gres=gpu:rtx:1
 ##SBATCH --gres=gpu:tesla:1
 ##SBATCH --gres=gpu:tesla:1
@@ -18,14 +19,15 @@ module purge
 
 # (Opcional) Carga de módulos software,usualmente cuda y cudnn
 spack load miniconda3
-spack load cuda@12.1
+spack load cuda@10.0
 
 # (Opcional) Activación de entorno virtual de Conda
-source activate foro
+source activate forito
 
 # Ejecución del primer paso
 # echo python /mnt/beegfs/lmolino/PycharmProjects/${1}/run.py
 # srun python /mnt/beegfs/lmolino/PycharmProjects/RADNLP/inference.py
-srun python /mnt/beegfs/lmolino/PycharmProjects/RADNLP/train.py
+srun python /mnt/beegfs/aarjonil/peranssumm/PerAnsSumm-sinai/task_a/trainBERT.py
+#srun python /mnt/beegfs/aarjonil/peranssumm/PerAnsSumm-sinai/task_a/inference.py
 # srun torchrun --nproc_per_node=4 /mnt/beegfs/lmolino/PycharmProjects/${1}/run.py
 # srun python -m --num_processes=4 /mnt/beegfs/lmolino/PycharmProjects/${1}/run.py
